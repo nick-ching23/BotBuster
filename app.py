@@ -1,8 +1,10 @@
+import logging
+
 import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-from google.auth.aio.transport import aiohttp
+import aiohttp
 
 load_dotenv()
 
@@ -28,7 +30,8 @@ async def on_guild_join(guild):
             f"Hello, {guild.name}! 🎉 Thanks for inviting me!\n"
             "I'm here to assist you. Mention me with `@Veritas` to interact.\n"
             "In order to use our service, please register and login with the "
-            "guild Id as the orgId via Postman. \n Your guild id is: "
+            "guild Id as the orgId via Postman. \n"
+            "Your guild id is: "
             f"{guild.id}"
         )
     else:
@@ -52,7 +55,7 @@ async def on_message(message):
             await message.channel.send("Monitoring stopped!")
         else:
             await message.channel.send("I don't recognize that command. \n"
-                                       "I currently support 3 commands: \n"
+                                       "I currently support 2 commands: \n"
                                        "- start monitoring:  I will start "
                                        "monitoring every message that's "
                                        "being sent in this channel, "
@@ -77,7 +80,9 @@ async def on_message(message):
                 async with session.post(url, params=params, data=payload, headers=headers) as response:
                     if response.status == 200:
                         data = await response.json()
-                        if data.get("flagged"):
+                        flagged = data.get("flagged")
+                        print(f"{message.content}: {flagged}")
+                        if flagged is True:
                             await message.channel.send(
                                 f"⚠️ Message from {message.author} has been "
                                 f"flagged:"
