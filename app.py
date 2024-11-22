@@ -25,6 +25,7 @@ async def on_ready():
 
 @bot.event
 async def on_guild_join(guild):
+    logging.info(f"Bot has joined the guild: {guild.name}")
     if guild.system_channel:
         await guild.system_channel.send(
             f"Hello, {guild.name}! 🎉 Thanks for inviting me!\n"
@@ -67,6 +68,9 @@ async def on_message(message):
         return
 
     if monitoring:
+        if len(message.attachments) > 0:
+            print("Attachment found in message. Ignoring.")
+            return
         async with aiohttp.ClientSession() as session:
             try:
                 url = f"{os.getenv('VERITAS_URL')}/checkTextUser"
