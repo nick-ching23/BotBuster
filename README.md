@@ -31,8 +31,6 @@ To run this bot, ensure you have the following installed:
 - `.env` file with the following environment variables:
 ```env
 DISCORD_BOT_TOKEN=your_discord_bot_token
-DISCORD_CLIENT_ID=your_discord_client_id
-DISCORD_CLIENT_SECRET=your_discord_client_secret
 VERITAS_URL=http://34.66.164.124:8080
  ```
 ---
