@@ -1,5 +1,4 @@
 import logging
-
 import discord
 from discord.ext import commands
 import os
@@ -17,6 +16,7 @@ intents.message_content = True
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 monitoring = False
+
 
 @bot.event
 async def on_ready():
@@ -38,6 +38,7 @@ async def on_guild_join(guild):
     else:
         print(f"Joined {guild.name}, but no system channel is available.")
 
+
 @bot.event
 async def on_message(message):
     global monitoring
@@ -47,10 +48,12 @@ async def on_message(message):
 
     if bot.user.mentioned_in(message):
         content = message.content.lower()
-
+        
         if "start monitoring" in content:
             monitoring = True
             await message.channel.send("Monitoring started!")
+            print("STARTED MONITORING")
+
         elif "stop monitoring" in content:
             monitoring = False
             await message.channel.send("Monitoring stopped!")
@@ -69,8 +72,10 @@ async def on_message(message):
 
     if monitoring:
         if len(message.attachments) > 0:
-            print("Attachment found in message. Ignoring.")
+            print(f"DEBUG: Attachments detected: {message.attachments}")
+            await message.channel.send("Attachment found in message. Ignoring.")
             return
+        
         async with aiohttp.ClientSession() as session:
             try:
                 url = f"{os.getenv('VERITAS_URL')}/checkTextUser"
@@ -80,11 +85,12 @@ async def on_message(message):
                 }
                 headers = {"Content-Type": "application/json"}
                 payload = message.content
-
+            
                 async with session.post(url, params=params, data=payload, headers=headers) as response:
                     if response.status == 200:
                         data = await response.json()
                         flagged = data.get("flagged")
+
                         print(f"{message.content}: {flagged}")
                         if flagged is True:
                             await message.channel.send(
@@ -100,4 +106,5 @@ async def on_message(message):
                 await message.channel.send("⚠️ Unable to connect to the API.")
 
 
-bot.run(TOKEN)
+if __name__ == '__main__':
+    bot.run(TOKEN)
