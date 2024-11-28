@@ -66,11 +66,11 @@ python app.py
 
 **1. Add Veritas to Your Guild**
 
-**Option 1 [Easier]: Use a bot hosted by us:**
+**Option 1 [Easier] - Use a bot hosted by us:**
 
 We have `app.py` running on a configured GCP VM. Add our Discord bot to your guild using the following link: **[Invite Veritas to Your Guild](https://discord.com/oauth2/authorize?client_id=1308900909236883476)**
 
-**Option 2: Run your own bot:**
+**Option 2 - Run your own bot:**
 
 To run your own instance of the bot, a discord bot token is necessary.
 
@@ -165,9 +165,35 @@ Note that the warning is from a package used by discord. This is out of our hand
 
 ## **End-to-end testing** 
 
+End-to-end testing can be done manually by performing the following steps:
 
+0. Make sure that no other applications run on ports like 8080 and 5000 on your system (ignore this if you aren't running the bot, service or ML microservice locally).
 
+1. Run the service portion of the system: Refer to [this section](https://github.com/nick-ching23/pineapple?tab=readme-ov-file#how-to-build-our-project) if you would like to run the service locally. Note that running the service locally also requires you to set up a SQL database and an instance of the ML microservice. Alternatively, you can interact with a running instance of our service by referring to [this](https://github.com/nick-ching23/pineapple?tab=readme-ov-file#interacting-with-our-service).
 
+2. Run the client portion of the system: Refer to the previous sections for instructions on how to build and run the bot. If you're creating and hosting your own bot instance, make sure that you point `VERITAS_URL` in the `.env` appropriately (depending on whether your service in question is a local one or not).
+
+3. Invite the client (discord bot) to your discord server - again, follow the steps from the section on activation.
+
+4. Now, send messages in chat (*Note that the ML microservice is still being tweaked - it's a work in progress):
+
+e.g. a ChatGPT response to `write a haiku about yourself`
+
+<p align="center">
+<img width="595" alt="Screenshot 2024-11-27 at 11 31 42 PM" src="https://github.com/user-attachments/assets/50d44c09-69d1-4fb9-9217-6fabd7e4b5b8">
+</p>
+
+e.g. my response to Nick wasn't flagged
+
+<p align="center">
+<img width="641" alt="Screenshot 2024-11-27 at 11 35 09 PM" src="https://github.com/user-attachments/assets/ffc685d3-e9bc-4d8b-9727-e715eb11f343">
+</p>
+
+e.g. messages with attachments are ignored
+
+<p align="center">
+<img width="446" alt="Screenshot 2024-11-27 at 11 36 24 PM" src="https://github.com/user-attachments/assets/a7b29d0a-0b63-40c2-a32a-a3d469711a36">
+</p>
 
 
 
