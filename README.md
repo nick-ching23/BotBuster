@@ -12,15 +12,14 @@ Contributions + Tasks:
 
 ## **About The Project**
 
-BotBuster is a Discord bot that utilizes the Veritas backend service. At its core, this bot aims to help identify bots in various Discord groups. Please feel free to view the [Veritas](https://github.com/nick-ching23/pineapple) at the following link. 
+BotBuster is a Discord bot that utilizes the Veritas backend service. At its core, this bot aims to help identify bots/users generating messages using AI within various Discord groups. Please feel free to view [Veritas](https://github.com/nick-ching23/pineapple) at the following link. 
 
 ## **How BotBuster interacts with Veritas**
-Given that our client application is a simple Discord Bot, our bot will simply make an HTTP call to Veritas. Once the request has been processed, the bot will return the response in chat. 
+Our client application is essentially a simple Discord Bot - our bot will simply make an HTTP call to Veritas. Once the request has been processed, the bot will return a relevant response in chat. 
 
 ---
 ## **Bot Buster's Functionality**
-BotBuster is an instructive example of an implementation of the Veritas service. At its core, BotButser simply checks every message sent in a discord group chat. 
-
+BotBuster is an instructive example of an implementation of the Veritas service. At its core, BotButser simply checks every message sent in a discord group chat.
 
 ## **Project Requirements** 
 
@@ -31,7 +30,7 @@ To run this bot, ensure you have the following installed:
 - `.env` file with the following environment variables:
 ```env
 DISCORD_BOT_TOKEN=your_discord_bot_token
-VERITAS_URL=http://34.66.164.124:8080
+VERITAS_URL=http://34.70.245.192:8080 # (or) http://localhost:8080 if hosting Veritas locally
  ```
 ---
 
@@ -48,10 +47,10 @@ cd veritas-discord-bot
 
 ```plaintext
 DISCORD_BOT_TOKEN=your_discord_bot_token
-VERITAS_URL=https://api.veritas.com
+VERITAS_URL=http://34.70.245.192:8080 # (or) http://localhost:8080 if hosting Veritas locally
 ```
 
-3.	Install dependencies:
+3.	Install dependencies (we recommend doing this within a Python virtual environment):
 ```bash
 pip install -r requirements.txt
 ```
@@ -67,10 +66,34 @@ python app.py
 
 **1. Add Veritas to Your Guild**
 
-Add our Discord bot to your guild using the following link:
+**Option 1 [Easier]: Use a bot hosted by us:**
 
-**[Invite Veritas to Your Guild](https://discord.com/oauth2/authorize?client_id=1308900909236883476)**
+We have `app.py` running on a configured GCP VM. Add our Discord bot to your guild using the following link: **[Invite Veritas to Your Guild](https://discord.com/oauth2/authorize?client_id=1308900909236883476)**
 
+**Option 2: Run your own bot:**
+
+To run your own instance of the bot, a discord bot token is necessary.
+
+If you don't have a bot token, you can obtain one by following these steps:
+ - Go to the Discord Developer Portal: https://discord.com/developers/applications
+ - Log in with your Discord account, or create an account if you don't have one
+ - Click on 'New Application' to create a new bot.
+ - Give your application a name and click 'Create'.
+ - Navigate to the 'Bot' tab on the left sidebar and click 'Add Bot'.
+ - Once the bot is created, you will find a 'Token' section. Click 'Reset Token' to generate a new token.
+ - Copy the generated token securely. Set the value of `DISCORD_BOT_TOKEN` to this token in your `.env` file and follow steps 2 to 4 from the previous section!
+
+To invite the bot:
+ - Navigate to the 'OAuth2' tab, then to 'URL Generator'.
+ - Under 'Scopes', select 'bot'.
+ - Under 'Bot Permissions', select the permissions your bot will need (e.g., 'Send Messages', 'Read Messages' for our bot use)
+ - Copy the generated URL and paste it into your browser to invite the bot to your server.
+
+To grant the bot permissions:
+ - Navigate to the 'Bot' tab
+ - Under 'Privileged Gateway Intents', check 'Server Members Intent' and 'Message Content Intent'.
+
+For more details, you can also check the official Discord bot documentation: https://discord.com/developers/docs/intro
 
 **2. Receive Your Guild ID**
 
@@ -80,20 +103,15 @@ Once Veritas is added to your guild, it will automatically generate a **Guild ID
   <img src="https://github.com/user-attachments/assets/f07f2313-7fdc-4dc0-8b9e-137a8af0a91e" width="400">
 </p>
 
-
-
 **3. Register Your Organization via Postman**
 
 Use Postman to register your organization. Run the following command:
-
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/803c8b4d-9069-4e42-ab43-e0585514bda7" width="400">
 </p>
 
-
 This step ensures your guild is registered in our system, allowing the Veritas API to interact with messages from your guild.
-
 
 **4. Start Monitoring with Veritas**
 
@@ -107,10 +125,9 @@ To start monitoring messages in your guild, use the following command in Discord
   <img src="https://github.com/user-attachments/assets/9ac3e920-6c7c-41cb-9aa1-c73fbe7dc0a3" width="300">
 </p>
 
-
 **4. Just type messages**
 
-From now, the system will automatically check each message to determoine if it was generated by generated AI or not. 
+From now, the system will automatically check each message to determine if it was generated by generated AI or not. 
 
 
 
@@ -125,9 +142,6 @@ To stop monitoring messages in your guild, use the following command in Discord:
 <p align="center">
   <img src="https://github.com/user-attachments/assets/46000f3c-0733-4783-9618-84620a77a4c1" width="300">
 </p>
-
-
-
 
 ## **Testing for the bot**
 
@@ -146,11 +160,10 @@ pytest test_bot.py
 
 <img width="350" alt="Screenshot 2024-11-27 at 5 46 10 PM" src="https://github.com/user-attachments/assets/bcaf2a50-c043-4c9a-8f81-e1003044174b">
 
-Note that the warning is from a package used by discord. This is out of our hands 
+Note that the warning is from a package used by discord. This is out of our hands
 
 
 ## **End-to-end testing** 
-
 
 
 
